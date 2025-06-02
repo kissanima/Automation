@@ -1,0 +1,326 @@
+# ============================================================================
+# Facebook Groups Automation - .gitignore
+# ============================================================================
+
+# ========================
+# Python
+# ========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ========================
+# Virtual Environments
+# ========================
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+automation_env/
+facebook_env/
+
+# ========================
+# Project Data (SENSITIVE)
+# ========================
+data/
+logs/
+chrome_automation_profile/
+chrome_automation_profiles/
+chrome_automation/
+*.log
+*.log.*
+
+# Templates (user content)
+templates/*.json
+data/templates/
+data/scheduled_posts/
+data/sessions/
+
+# Credentials and sensitive files
+*.key
+*.pem
+*.p12
+credentials.json
+config.json
+settings.json
+data/settings.json
+data/credentials/
+encrypted_*
+
+# Session data
+data/facebook_session*
+session_*
+cookies.json
+*.session
+
+# User data directories
+user_data/
+profiles/
+automation_data/
+
+# ========================
+# Chrome/WebDriver
+# ========================
+chromedriver
+chromedriver.exe
+geckodriver
+geckodriver.exe
+msedgedriver
+msedgedriver.exe
+webdriver/
+drivers/
+
+# Chrome user data
+Default/
+chrome_debug.log
+chrome_*_debug.log
+
+# ========================
+# IDE and Editors
+# ========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.log
+
+# PyCharm
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ========================
+# Operating System
+# ========================
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ========================
+# Testing and Coverage
+# ========================
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# ========================
+# Documentation
+# ========================
+docs/_build/
+.readthedocs.yml
+
+# ========================
+# Jupyter Notebook
+# ========================
+.ipynb_checkpoints
+
+# ========================
+# Environment Variables
+# ========================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ========================
+# Package managers
+# ========================
+pip-log.txt
+pip-delete-this-directory.txt
+.pip
+
+# ========================
+# PyInstaller/cx_Freeze
+# ========================
+*.manifest
+*.spec
+build/
+dist/
+
+# ========================
+# Automation Specific
+# ========================
+
+# Screenshots and media
+screenshots/
+images/temp/
+temp_images/
+*.png.backup
+*.jpg.backup
+
+# Backup files
+backup/
+backups/
+*.backup
+*_backup.*
+
+# Error dumps
+crash_reports/
+error_dumps/
+debug_info/
+
+# Performance logs
+performance_*.log
+timing_*.log
+memory_*.log
+
+# Configuration backups
+config_backup/
+settings_backup/
+
+# ========================
+# Version Control
+# ========================
+.git/
+.gitattributes
+
+# ========================
+# Temporary Files
+# ========================
+temp/
+tmp/
+temporary/
+*.temp
+*.tmp
+~*
+
+# ========================
+# Security
+# ========================
+secrets/
+private/
+confidential/
+.secrets
+*.secret
+
+# API keys and tokens
+api_keys.txt
+tokens.txt
+auth_*
+oauth_*
+
+# ========================
+# Build and Distribution
+# ========================
+build/
+dist/
+*.tar.gz
+*.zip
+*.7z
+*.rar
+
+# ========================
+# Monitoring and Analytics
+# ========================
+analytics/
+metrics/
+monitoring/
+stats/
+
+# ========================
+# User-specific ignore patterns
+# ========================
+# Add your own patterns here
+# Example:
+# my_personal_notes.txt
+# test_data/
+# experimental/
+
+# ========================
+# END
+# ========================
