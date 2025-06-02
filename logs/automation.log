@@ -1,0 +1,57 @@
+2025-06-02 08:45:19,837 - __main__ - INFO - === Facebook Groups Automation Starting ===
+2025-06-02 08:45:19,837 - __main__ - INFO - STEP 1: Checking priority startup settings...
+2025-06-02 08:45:19,837 - root - INFO - 🚀 STARTUP PRIORITY: Moving to Virtual Desktop 2 FIRST
+2025-06-02 08:45:19,837 - root - INFO - FIRST PRIORITY: Moving to Virtual Desktop 2...
+2025-06-02 08:45:21,250 - root - INFO - ✅ Successfully moved to Virtual Desktop 2 via PowerShell
+2025-06-02 08:45:22,263 - root - INFO - ✅ Virtual Desktop 2 move completed - proceeding with app initialization
+2025-06-02 08:45:22,264 - __main__ - INFO - STEP 2: Creating Qt application...
+2025-06-02 08:45:22,289 - root - INFO - Starting application initialization after desktop move...
+2025-06-02 08:45:22,306 - root - INFO - System tray icon created
+2025-06-02 08:45:22,306 - root - INFO - Added to Windows startup
+2025-06-02 08:45:22,306 - root - INFO - Windows autostart enabled
+2025-06-02 08:45:22,306 - root - INFO - Remaining startup settings applied
+2025-06-02 08:45:22,306 - core.post_scheduler - INFO - Loaded 0 scheduled posts
+2025-06-02 08:45:22,306 - core.post_scheduler - INFO - Post queue worker started
+2025-06-02 08:45:22,314 - templates.template_manager - INFO - Loaded 5 templates
+2025-06-02 08:45:22,315 - core.post_scheduler - INFO - Dependencies set for scheduler
+2025-06-02 08:45:22,626 - ui.main_window - INFO - All timers setup completed
+2025-06-02 08:45:22,626 - utils.web_utils - INFO - Using existing automation profile (less than 7 days old)
+2025-06-02 08:45:22,626 - utils.web_utils - INFO - Using automation profile: C:\Users\kissa\Desktop\Work\Automation\chrome_automation_profile
+2025-06-02 08:45:24,658 - utils.web_utils - INFO - WebDriver created with automation profile
+2025-06-02 08:45:34,745 - core.facebook_login - INFO - Checking session validity on URL: https://www.facebook.com/
+2025-06-02 08:45:34,790 - core.facebook_login - INFO - Session valid - found profile_links indicator: [aria-label='Your profile']
+2025-06-02 08:45:36,827 - core.facebook_login - INFO - Session saved successfully with enhanced persistence
+2025-06-02 08:45:36,827 - ui.main_window - INFO - Auto-login successful - already logged in
+2025-06-02 08:45:36,827 - root - INFO - Scheduler timer started with 15.0s interval
+2025-06-02 08:45:36,827 - root - INFO - Application initialization completed
+2025-06-02 08:45:36,827 - __main__ - INFO - STEP 3: Configuring window display...
+2025-06-02 08:45:36,827 - __main__ - INFO - Starting minimized to tray
+2025-06-02 08:45:36,857 - __main__ - INFO - STEP 4: Scheduling auto-login...
+2025-06-02 08:45:36,857 - __main__ - INFO - ✅ Startup sequence completed - application ready
+2025-06-02 08:45:41,861 - utils.web_utils - INFO - Using existing automation profile (less than 7 days old)
+2025-06-02 08:45:41,861 - utils.web_utils - INFO - Using automation profile: C:\Users\kissa\Desktop\Work\Automation\chrome_automation_profile
+2025-06-02 08:45:45,787 - utils.web_utils - ERROR - Failed to create WebDriver: Message: session not created: probably user data directory is already in use, please specify a unique value for --user-data-dir argument, or don't use --user-data-dir
+Stacktrace:
+	GetHandleVerifier [0x00007FF62DA6CF45+75717]
+	GetHandleVerifier [0x00007FF62DA6CFA0+75808]
+	(No symbol) [0x00007FF62D838F9A]
+	(No symbol) [0x00007FF62D875B02]
+	(No symbol) [0x00007FF62D871ADD]
+	(No symbol) [0x00007FF62D8C52D8]
+	(No symbol) [0x00007FF62D8C48B0]
+	(No symbol) [0x00007FF62D8B7153]
+	(No symbol) [0x00007FF62D880421]
+	(No symbol) [0x00007FF62D8811B3]
+	GetHandleVerifier [0x00007FF62DD6D71D+3223453]
+	GetHandleVerifier [0x00007FF62DD67CC2+3200322]
+	GetHandleVerifier [0x00007FF62DD85AF3+3322739]
+	GetHandleVerifier [0x00007FF62DA86A1A+180890]
+	GetHandleVerifier [0x00007FF62DA8E11F+211359]
+	GetHandleVerifier [0x00007FF62DA75294+109332]
+	GetHandleVerifier [0x00007FF62DA75442+109762]
+	GetHandleVerifier [0x00007FF62DA5BA59+4825]
+	BaseThreadInitThunk [0x00007FFE2232E8D7+23]
+	RtlUserThreadStart [0x00007FFE2431BF6C+44]
+
+2025-06-02 08:45:45,788 - ui.main_window - ERROR - Auto-login error: 'NoneType' object has no attribute 'get'
+2025-06-02 08:50:25,694 - core.facebook_login - ERROR - Error checking session validity: 'NoneType' object has no attribute 'current_url'

@@ -1,0 +1,512 @@
+[
+  {
+    "timestamp": 1748009852.8353665,
+    "post_id": "schedule_1748009101_1",
+    "template_id": "aa40c183-8583-47ac-be7f-83ad2ddf623d",
+    "groups_targeted": 1,
+    "successful_posts": 0,
+    "failed_posts": 1,
+    "next_scheduled": 1748096252.8353665,
+    "status": "failed"
+  },
+  {
+    "timestamp": 1748010248.1701872,
+    "post_id": "schedule_1748009101_1",
+    "template_id": "aa40c183-8583-47ac-be7f-83ad2ddf623d",
+    "groups_targeted": 1,
+    "successful_posts": 0,
+    "failed_posts": 1,
+    "next_scheduled": 1748096648.1701872,
+    "status": "failed"
+  },
+  {
+    "timestamp": 1748010766.1710534,
+    "post_id": "schedule_1748009101_1",
+    "template_id": "aa40c183-8583-47ac-be7f-83ad2ddf623d",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748097166.1710534,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748014607.7818546,
+    "post_id": "schedule_1748014521_0",
+    "template_id": "22483ef0-7698-45fc-b89b-45ad61aacb36",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748101007.7818546,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748014636.5918987,
+    "post_id": "schedule_1748014521_0",
+    "template_id": "22483ef0-7698-45fc-b89b-45ad61aacb36",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748101036.5918987,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748015002.3226416,
+    "post_id": "schedule_1748014521_0",
+    "template_id": "22483ef0-7698-45fc-b89b-45ad61aacb36",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748101402.3226416,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748015299.6518834,
+    "post_id": "schedule_1748014521_0",
+    "template_id": "22483ef0-7698-45fc-b89b-45ad61aacb36",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748101699.6518834,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748015661.4245877,
+    "post_id": "schedule_1748014521_0",
+    "template_id": "22483ef0-7698-45fc-b89b-45ad61aacb36",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748102061.4245877,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748054342.8616767,
+    "post_id": "schedule_1748014521_0",
+    "template_id": "22483ef0-7698-45fc-b89b-45ad61aacb36",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748140742.8616767,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748054735.0479674,
+    "post_id": "schedule_1748014521_0",
+    "template_id": "22483ef0-7698-45fc-b89b-45ad61aacb36",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748141135.0479674,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748055511.1983573,
+    "post_id": "schedule_1748014521_0",
+    "template_id": "22483ef0-7698-45fc-b89b-45ad61aacb36",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748141911.1983573,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748055702.8564444,
+    "post_id": "schedule_1748055645_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748142102.8564444,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748055978.0776768,
+    "post_id": "schedule_1748055645_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748142378.0776768,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748056213.3011465,
+    "post_id": "schedule_1748055645_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748142613.3011465,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748056304.6906838,
+    "post_id": "schedule_1748055645_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748142704.6906838,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748056366.056345,
+    "post_id": "schedule_1748055645_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748142766.056345,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748057002.9095478,
+    "post_id": "schedule_1748055645_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748143402.9095478,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748057557.1351883,
+    "post_id": "schedule_1748055645_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748143957.1351883,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748057962.6778336,
+    "post_id": "schedule_1748055645_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 0,
+    "failed_posts": 1,
+    "next_scheduled": 1748144362.6778336,
+    "status": "failed"
+  },
+  {
+    "timestamp": 1748058101.9209793,
+    "post_id": "schedule_1748055645_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748144501.9209793,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748058332.401547,
+    "post_id": "schedule_1748055645_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748144732.401547,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748058486.9735754,
+    "post_id": "schedule_1748055645_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748144886.9735754,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748058590.5836802,
+    "post_id": "schedule_1748055645_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748144990.5836802,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748058981.4122663,
+    "post_id": "schedule_1748055645_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748145381.4122663,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748059402.1498668,
+    "post_id": "schedule_1748055645_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748145802.1498668,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748059901.1009216,
+    "post_id": "schedule_1748059866_0",
+    "template_id": "0eb1a097-e28c-4919-9d46-af01eee6ef8b",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748146301.1009216,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748060206.3241417,
+    "post_id": "schedule_1748059866_0",
+    "template_id": "0eb1a097-e28c-4919-9d46-af01eee6ef8b",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748146606.3241417,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748060308.2280755,
+    "post_id": "schedule_1748059866_0",
+    "template_id": "0eb1a097-e28c-4919-9d46-af01eee6ef8b",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748146708.2280755,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748060913.7736673,
+    "post_id": "schedule_1748060727_1",
+    "template_id": "6f6478d6-9257-49b3-a17f-8bc1d5f91553",
+    "groups_targeted": 1,
+    "successful_posts": 0,
+    "failed_posts": 1,
+    "next_scheduled": 1748147313.7736673,
+    "status": "failed"
+  },
+  {
+    "timestamp": 1748060913.7777035,
+    "post_id": "schedule_1748060769_2",
+    "template_id": "6f6478d6-9257-49b3-a17f-8bc1d5f91553",
+    "groups_targeted": 1,
+    "successful_posts": 0,
+    "failed_posts": 1,
+    "next_scheduled": 1748147313.7777035,
+    "status": "failed"
+  },
+  {
+    "timestamp": 1748060915.5865765,
+    "post_id": "schedule_1748060769_2",
+    "template_id": "6f6478d6-9257-49b3-a17f-8bc1d5f91553",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748147315.5865765,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748060915.7810762,
+    "post_id": "schedule_1748060727_1",
+    "template_id": "6f6478d6-9257-49b3-a17f-8bc1d5f91553",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748147315.7810762,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748060938.2562823,
+    "post_id": "schedule_1748060769_2",
+    "template_id": "6f6478d6-9257-49b3-a17f-8bc1d5f91553",
+    "groups_targeted": 1,
+    "successful_posts": 0,
+    "failed_posts": 1,
+    "next_scheduled": 1748147338.2562823,
+    "status": "failed"
+  },
+  {
+    "timestamp": 1748060940.2039976,
+    "post_id": "schedule_1748060727_1",
+    "template_id": "6f6478d6-9257-49b3-a17f-8bc1d5f91553",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748147340.2039976,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748060973.6492374,
+    "post_id": "schedule_1748060869_3",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 0,
+    "failed_posts": 1,
+    "next_scheduled": 1748147373.6492374,
+    "status": "failed"
+  },
+  {
+    "timestamp": 1748061030.5467892,
+    "post_id": "schedule_1748060869_3",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748147430.5467892,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748061649.968243,
+    "post_id": "schedule_1748060869_3",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748147430.5467892,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748061685.6669607,
+    "post_id": "schedule_1748060769_2",
+    "template_id": "6f6478d6-9257-49b3-a17f-8bc1d5f91553",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748147338.2562823,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748061722.030061,
+    "post_id": "schedule_1748060727_1",
+    "template_id": "6f6478d6-9257-49b3-a17f-8bc1d5f91553",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748147340.2039976,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748061778.9002998,
+    "post_id": "schedule_1748059866_0",
+    "template_id": "0eb1a097-e28c-4919-9d46-af01eee6ef8b",
+    "groups_targeted": 1,
+    "successful_posts": 0,
+    "failed_posts": 1,
+    "next_scheduled": 1748146708.2280755,
+    "status": "failed"
+  },
+  {
+    "timestamp": 1748360783.8832839,
+    "post_id": "schedule_1748060869_3",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748447147.6060023,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748361236.7080832,
+    "post_id": "schedule_1748060869_3",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748447147.6060023,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748396011.4972274,
+    "post_id": "schedule_1748060869_3",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748447147.6060023,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748396379.1306899,
+    "post_id": "schedule_1748060869_3",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748447147.6060023,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748397290.0462732,
+    "post_id": "schedule_1748060869_3",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 1,
+    "successful_posts": 1,
+    "failed_posts": 0,
+    "next_scheduled": 1748447147.6060023,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748397655.484533,
+    "post_id": "schedule_1748397447_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 2,
+    "successful_posts": 2,
+    "failed_posts": 0,
+    "next_scheduled": 1748401107.2893786,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748397825.4104054,
+    "post_id": "schedule_1748397447_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 2,
+    "successful_posts": 2,
+    "failed_posts": 0,
+    "next_scheduled": 1748401107.2893786,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748398181.4496746,
+    "post_id": "schedule_1748397447_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 2,
+    "successful_posts": 2,
+    "failed_posts": 0,
+    "next_scheduled": 1748401781.4496746,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748515661.2113154,
+    "post_id": "schedule_1748397447_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 2,
+    "successful_posts": 0,
+    "failed_posts": 2,
+    "next_scheduled": 1748519261.209308,
+    "status": "failed"
+  },
+  {
+    "timestamp": 1748755484.7505713,
+    "post_id": "schedule_1748397447_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 2,
+    "successful_posts": 2,
+    "failed_posts": 0,
+    "next_scheduled": 1748759084.7492208,
+    "status": "success"
+  },
+  {
+    "timestamp": 1748823040.4056478,
+    "post_id": "schedule_1748397447_0",
+    "template_id": "fbfc9fb6-3e73-4b05-bb4d-e4f023dba6c7",
+    "groups_targeted": 2,
+    "successful_posts": 2,
+    "failed_posts": 0,
+    "next_scheduled": 1748826640.4056478,
+    "status": "success"
+  }
+]
