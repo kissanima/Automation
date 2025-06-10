@@ -28,6 +28,16 @@ share/python-wheels/
 *.egg
 MANIFEST
 
+# Python bytecode files (all variations)
+*.pyc
+*.pyo
+*.pyd
+
+# Python 3 bytecode with version info
+*.cpython-*.pyc
+*.cpython-*.pyo
+*.pypy-*.pyc
+
 # ========================
 # Virtual Environments
 # ========================

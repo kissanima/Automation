@@ -23,19 +23,18 @@ class GroupPoster:
     def post_to_group(self, group_url, template):
         """
         Create a new post in a Facebook group using the post creation dialog
-        IMPORTANT: This creates NEW POSTS, never comments on existing posts
+        FIXED: Enhanced dialog detection and timing for textbox discovery
         """
         try:
             if not self.fb_login.is_logged_in:
                 self.logger.error("Not logged into Facebook")
                 return False
             
-            # ✅ LOAD SETTINGS - This is what was missing!
+            # Load settings safely
             try:
                 from ui.settings_dialog import get_current_settings
                 settings = get_current_settings()
             except ImportError:
-                # Fallback defaults if settings not available
                 settings = {
                     'navigation_delay': 5,
                     'click_delay': 2,
@@ -44,28 +43,20 @@ class GroupPoster:
                     'detailed_logging': False
                 }
             
-            # Get configurable delays from settings
             nav_delay = settings.get('navigation_delay', 5)
             click_delay = settings.get('click_delay', 2)
             typing_speed = settings.get('typing_speed_preset', 'Fast').lower()
             detailed_logging = settings.get('detailed_logging', False)
-            
-            if detailed_logging:
-                self.logger.info(f"Posting with settings: nav_delay={nav_delay}s, click_delay={click_delay}s, typing={typing_speed}")
             
             driver = self.fb_login.get_driver()
             
             # Navigate to the group
             self.logger.info(f"Navigating to group: {group_url}")
             driver.get(group_url)
-            
-            # ✅ USE SETTINGS FOR NAVIGATION DELAY
             self.web_manager.random_delay(nav_delay, nav_delay + 2)
             
             # Scroll to ensure page is loaded
             self.web_manager.smooth_scroll(driver, 300)
-            
-            # ✅ USE SETTINGS FOR SCROLL DELAY
             self.web_manager.random_delay(click_delay, click_delay + 2)
             
             # STEP 1: Find and click the "Write something..." button to open the dialog
@@ -73,19 +64,12 @@ class GroupPoster:
             
             # Look for the main "Write something..." trigger
             write_something_selectors = [
-                # The span you identified
                 "span.x1lliihq.x6ikm8r.x10wlt62.x1n2onr6",
-                
-                # Alternative selectors for "Write something..."
                 "[aria-placeholder='Write something...']",
                 "[placeholder='Write something...']",
                 "span:contains('Write something')",
-                
-                # Div that contains the placeholder
                 "div[aria-placeholder='Write something...']",
                 "div[role='textbox'][aria-placeholder*='Write']",
-                
-                # Broader selectors
                 "[data-testid*='composer']",
                 "[data-pagelet*='composer']"
             ]
@@ -94,14 +78,12 @@ class GroupPoster:
             for selector in write_something_selectors:
                 try:
                     if ":contains(" in selector:
-                        # Use XPath for text-based search
                         elements = driver.find_elements(By.XPATH, f"//span[contains(text(), 'Write something')]")
                     else:
                         elements = driver.find_elements(By.CSS_SELECTOR, selector)
                     
                     for element in elements:
                         if element.is_displayed() and element.is_enabled():
-                            # Check if it's the right element
                             element_text = element.get_attribute('textContent') or ''
                             if 'write something' in element_text.lower() or element.get_attribute('aria-placeholder'):
                                 write_button = element
@@ -122,96 +104,271 @@ class GroupPoster:
             # Click the "Write something..." button to open the dialog
             try:
                 driver.execute_script("arguments[0].scrollIntoView(true);", write_button)
-                
-                # ✅ USE SETTINGS FOR CLICK DELAY
                 self.web_manager.random_delay(click_delay/2, click_delay)
                 write_button.click()
                 self.logger.info("Clicked 'Write something...' button")
             except Exception:
-                # Try JavaScript click if regular click fails
                 driver.execute_script("arguments[0].click();", write_button)
                 self.logger.info("Used JavaScript to click 'Write something...' button")
             
-            # STEP 2: Wait for the post creation dialog to appear
-            # ✅ USE SETTINGS FOR DIALOG WAIT
-            self.web_manager.random_delay(click_delay, click_delay + 2)
+            # ✅ STEP 2: Enhanced dialog detection with longer wait
+            self.logger.info("🔍 Waiting for create post dialog to fully load...")
+            self.web_manager.random_delay(click_delay + 2, click_delay + 4)  # Longer wait
             
-            # Look for the dialog textbox that appears
-            dialog_textbox_selectors = [
-                # From the HTML you provided
-                "div[contenteditable='true'][role='textbox'][aria-placeholder='Write something...']",
-                "div[data-lexical-editor='true']",
-                
-                # Alternative selectors for the dialog
-                "[aria-label='Create post'] [contenteditable='true']",
-                "[role='dialog'] [contenteditable='true']",
-                "[role='dialog'] [role='textbox']",
-                
-                # Broader dialog selectors
-                "div[contenteditable='true'][aria-placeholder*='Write']",
-                "div[contenteditable='true'][spellcheck='true']"
-            ]
+            dialog_container = None
             
-            dialog_textbox = None
-            for selector in dialog_textbox_selectors:
-                try:
-                    elements = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, selector)))
-                    for element in elements:
-                        if element.is_displayed() and element.is_enabled():
-                            dialog_textbox = element
-                            self.logger.info(f"Found dialog textbox with selector: {selector}")
+            # Try multiple approaches to find the dialog
+            try:
+                # Method 1: Look for dialog with aria-label
+                dialog_selectors = [
+                    "[aria-label='Create post'][role='dialog']",
+                    "[aria-label*='Create'][role='dialog']",
+                    "[role='dialog'][aria-modal='true']",
+                    "[role='dialog']"
+                ]
+                
+                for selector in dialog_selectors:
+                    try:
+                        dialogs = driver.find_elements(By.CSS_SELECTOR, selector)
+                        for dialog in dialogs:
+                            if dialog.is_displayed():
+                                dialog_container = dialog
+                                aria_label = dialog.get_attribute('aria-label') or 'No label'
+                                self.logger.info(f"Found dialog with selector: {selector} (label: '{aria_label}')")
+                                break
+                        if dialog_container:
                             break
-                    if dialog_textbox:
-                        break
-                except TimeoutException:
-                    continue
+                    except Exception:
+                        continue
+                
+                # Method 2: If no dialog found, try broader search
+                if not dialog_container:
+                    self.logger.info("🔍 Trying broader dialog search...")
+                    
+                    # Look for any recently appeared dialog-like container
+                    potential_dialogs = driver.find_elements(By.CSS_SELECTOR, "div")
+                    for div in potential_dialogs:
+                        if div.is_displayed():
+                            div_html = driver.execute_script("return arguments[0].innerHTML;", div)
+                            if ('contenteditable="true"' in div_html and 
+                                'role="textbox"' in div_html and
+                                ('write something' in div_html.lower() or 'create a public post' in div_html.lower())):
+                                dialog_container = div
+                                self.logger.info("Found dialog via content search")
+                                break
             
-            if not dialog_textbox:
-                self.logger.error("Could not find post creation dialog textbox")
+            except Exception as e:
+                self.logger.error(f"Error finding dialog: {e}")
+            
+            if not dialog_container:
+                self.logger.error("Could not find create post dialog")
                 return False
             
-            # STEP 3: Type the content in the dialog textbox
-            self.logger.info("Typing content in dialog textbox")
+            # ✅ STEP 3: Enhanced textbox search with your EXACT structure + additional wait
+            self.logger.info("🔍 Waiting for textbox to appear in dialog...")
+            self.web_manager.random_delay(1, 2)  # Additional wait for textbox to appear
             
-            # Clear any existing content
+            dialog_textbox = None
+            
+            try:
+                self.logger.info("🔍 Searching for textbox using EXACT structure...")
+                
+                # Method 1: Use your EXACT class structure
+                exact_class_selector = "div.xzsf02u.x1a2a7pz.x1n2onr6.x14wi4xw.x9f619.x1lliihq.x5yr21d.xh8yej3.notranslate[contenteditable='true'][role='textbox']"
+                
+                exact_textboxes = dialog_container.find_elements(By.CSS_SELECTOR, exact_class_selector)
+                
+                if detailed_logging:
+                    self.logger.info(f"Found {len(exact_textboxes)} textboxes with exact classes")
+                
+                for textbox in exact_textboxes:
+                    if textbox.is_displayed() and textbox.is_enabled():
+                        placeholder = textbox.get_attribute('aria-placeholder') or ''
+                        if ('write something' in placeholder.lower() or 'create a public post' in placeholder.lower()):
+                            dialog_textbox = textbox
+                            self.logger.info(f"✅ Found textbox with EXACT classes: '{placeholder}'")
+                            break
+                
+                # Method 2: Simplified class approach
+                if not dialog_textbox:
+                    self.logger.info("🔍 Trying simplified class approach...")
+                    
+                    simplified_selector = "div.xzsf02u[contenteditable='true'][role='textbox']"
+                    simplified_textboxes = dialog_container.find_elements(By.CSS_SELECTOR, simplified_selector)
+                    
+                    if detailed_logging:
+                        self.logger.info(f"Found {len(simplified_textboxes)} textboxes with simplified classes")
+                    
+                    for textbox in simplified_textboxes:
+                        if textbox.is_displayed() and textbox.is_enabled():
+                            placeholder = textbox.get_attribute('aria-placeholder') or ''
+                            data_lexical = textbox.get_attribute('data-lexical-editor') or ''
+                            
+                            is_valid = (
+                                ('write something' in placeholder.lower() or 'create a public post' in placeholder.lower()) and
+                                'comment' not in placeholder.lower() and
+                                data_lexical == 'true'
+                            )
+                            
+                            if is_valid:
+                                dialog_textbox = textbox
+                                self.logger.info(f"✅ Found textbox with simplified classes: '{placeholder}'")
+                                break
+                
+                # Method 3: Basic contenteditable search
+                if not dialog_textbox:
+                    self.logger.info("🔍 Trying basic contenteditable search...")
+                    
+                    basic_textboxes = dialog_container.find_elements(By.CSS_SELECTOR, "div[contenteditable='true']")
+                    
+                    if detailed_logging:
+                        self.logger.info(f"Found {len(basic_textboxes)} contenteditable divs")
+                    
+                    for textbox in basic_textboxes:
+                        if textbox.is_displayed() and textbox.is_enabled():
+                            placeholder = textbox.get_attribute('aria-placeholder') or ''
+                            role = textbox.get_attribute('role') or ''
+                            
+                            is_valid = (
+                                role == 'textbox' and
+                                ('write something' in placeholder.lower() or 'create a public post' in placeholder.lower()) and
+                                'comment' not in placeholder.lower()
+                            )
+                            
+                            if is_valid:
+                                dialog_textbox = textbox
+                                self.logger.info(f"✅ Found textbox with basic search: '{placeholder}'")
+                                break
+                
+                # Method 4: Global search if dialog search failed
+                if not dialog_textbox:
+                    self.logger.info("🔍 Trying global search as last resort...")
+                    
+                    global_textboxes = driver.find_elements(By.CSS_SELECTOR, "div.xzsf02u[contenteditable='true'][role='textbox']")
+                    
+                    if detailed_logging:
+                        self.logger.info(f"Found {len(global_textboxes)} textboxes globally")
+                    
+                    for textbox in global_textboxes:
+                        if textbox.is_displayed() and textbox.is_enabled():
+                            placeholder = textbox.get_attribute('aria-placeholder') or ''
+                            
+                            # Check if it's recently appeared (likely the dialog textbox)
+                            try:
+                                is_in_viewport = driver.execute_script("""
+                                    var rect = arguments[0].getBoundingClientRect();
+                                    return rect.top >= 0 && rect.top < window.innerHeight;
+                                """, textbox)
+                                
+                                is_valid = (
+                                    is_in_viewport and
+                                    ('write something' in placeholder.lower() or 'create a public post' in placeholder.lower()) and
+                                    'comment' not in placeholder.lower()
+                                )
+                                
+                                if is_valid:
+                                    dialog_textbox = textbox
+                                    self.logger.info(f"✅ Found textbox with global search: '{placeholder}'")
+                                    break
+                            except Exception:
+                                continue
+            
+            except Exception as e:
+                self.logger.error(f"Error in textbox search: {e}")
+            
+            # Enhanced debug information
+            if not dialog_textbox:
+                self.logger.error("❌ Could not find CREATE POST textbox")
+                
+                try:
+                    # Debug: Check what's in the dialog
+                    self.logger.error("🔍 ENHANCED DEBUG:")
+                    
+                    # Check all contenteditable divs in dialog
+                    all_contenteditable = dialog_container.find_elements(By.CSS_SELECTOR, "div[contenteditable='true']")
+                    self.logger.error(f"Found {len(all_contenteditable)} contenteditable divs in dialog")
+                    
+                    for i, div in enumerate(all_contenteditable[:5]):
+                        if div.is_displayed():
+                            placeholder = div.get_attribute('aria-placeholder') or 'No placeholder'
+                            role = div.get_attribute('role') or 'No role'
+                            classes = div.get_attribute('class') or 'No classes'
+                            self.logger.error(f"  Div {i+1}: placeholder='{placeholder}', role='{role}'")
+                            self.logger.error(f"    Classes: {classes[:80]}...")
+                    
+                    # Check specifically for role=textbox
+                    textbox_divs = dialog_container.find_elements(By.CSS_SELECTOR, "[role='textbox']")
+                    self.logger.error(f"Found {len(textbox_divs)} elements with role='textbox' in dialog")
+                    
+                    # Check for your exact classes
+                    exact_class_divs = dialog_container.find_elements(By.CSS_SELECTOR, "div.xzsf02u")
+                    self.logger.error(f"Found {len(exact_class_divs)} elements with 'xzsf02u' class in dialog")
+                    
+                except Exception as debug_e:
+                    self.logger.error(f"Enhanced debug failed: {debug_e}")
+                
+                return False
+            
+            # ✅ Enhanced safety check
+            try:
+                final_placeholder = dialog_textbox.get_attribute('aria-placeholder') or ''
+                final_role = dialog_textbox.get_attribute('role') or ''
+                
+                is_valid_textbox = (
+                    ('write something' in final_placeholder.lower() or 'create a public post' in final_placeholder.lower()) and
+                    final_role == 'textbox' and
+                    'comment' not in final_placeholder.lower()
+                )
+                
+                if not is_valid_textbox:
+                    self.logger.error("❌ SAFETY CHECK FAILED!")
+                    self.logger.error(f"   Placeholder: '{final_placeholder}'")
+                    self.logger.error(f"   Role: '{final_role}'")
+                    return False
+                
+                group_type = "Public Group" if 'create a public post' in final_placeholder.lower() else "Owned Group"
+                self.logger.info(f"✅ SAFETY CHECK PASSED: Confirmed textbox ({group_type})")
+                self.logger.info(f"   Placeholder: '{final_placeholder}'")
+            
+            except Exception as e:
+                self.logger.error(f"Safety check failed: {e}")
+                return False
+            
+            # STEP 4: Type content
+            self.logger.info("Typing content in CREATE POST textbox")
             dialog_textbox.clear()
-            
-            # ✅ USE SETTINGS FOR TYPING SPEED
             self.web_manager.human_type(dialog_textbox, template['content'], speed=typing_speed)
             self.web_manager.random_delay(1, 2)
             
-            # STEP 4: Handle image attachments if present
+            # STEP 5: Handle image attachments directly (NO separate function needed)
             if template.get('images') and len(template['images']) > 0:
-                success = self._attach_images_to_dialog(driver, template['images'], settings)
-                if not success:
-                    self.logger.warning("Failed to attach some images")
+                valid_images = [img for img in template['images'] if img and os.path.exists(img)]
+                if valid_images:
+                    self.logger.info(f"Starting direct drag & drop upload of {len(valid_images)} images")
+                    self.web_manager.random_delay(2, 3)  # Brief wait for dialog readiness
+                    
+                    success = self._direct_drag_drop_upload(driver, dialog_container, valid_images)
+                    if not success:
+                        self.logger.warning("Failed to attach some images")
+                else:
+                    self.logger.warning("No valid images found to attach")
+
             
-            # STEP 5: Find and click the "Post" button in the dialog
+            # STEP 6: Find and click Post button
             post_button_selectors = [
-                # From the HTML you provided
                 "[aria-label='Post'][role='button']",
                 "div[aria-label='Post'][role='button']",
-                
-                # Alternative selectors
                 "[role='dialog'] [aria-label='Post']",
-                "[role='dialog'] button:contains('Post')",
-                
-                # Generic post button selectors
-                "button[aria-label='Post']",
-                "[data-testid*='post-button']"
+                "button[aria-label='Post']"
             ]
             
             post_button = None
             for selector in post_button_selectors:
                 try:
-                    if ":contains(" in selector:
-                        elements = driver.find_elements(By.XPATH, "//button[contains(text(), 'Post')] | //div[contains(text(), 'Post') and @role='button']")
-                    else:
-                        elements = driver.find_elements(By.CSS_SELECTOR, selector)
-                    
+                    elements = driver.find_elements(By.CSS_SELECTOR, selector)
                     for element in elements:
                         if (element.is_displayed() and element.is_enabled() and 
-                            'post' in (element.get_attribute('aria-label') or element.get_attribute('textContent') or '').lower()):
+                            'post' in (element.get_attribute('aria-label') or '').lower()):
                             post_button = element
                             self.logger.info(f"Found Post button with selector: {selector}")
                             break
@@ -221,14 +378,12 @@ class GroupPoster:
                     continue
             
             if not post_button:
-                self.logger.error("Could not find Post button in dialog")
+                self.logger.error("Could not find Post button")
                 return False
             
-            # Click the Post button
+            # Click Post button
             try:
                 driver.execute_script("arguments[0].scrollIntoView(true);", post_button)
-                
-                # ✅ USE SETTINGS FOR CLICK DELAY
                 self.web_manager.random_delay(click_delay/2, click_delay)
                 post_button.click()
                 self.logger.info("Clicked Post button")
@@ -236,14 +391,11 @@ class GroupPoster:
                 driver.execute_script("arguments[0].click();", post_button)
                 self.logger.info("Used JavaScript to click Post button")
             
-            # STEP 6: Wait for post to be created and dialog to close
-            # ✅ USE SETTINGS FOR POST COMPLETION WAIT
-            post_completion_delay = nav_delay + 1  # Slightly longer than navigation
+            # STEP 7: Wait for completion
+            post_completion_delay = nav_delay + 1
             self.web_manager.random_delay(post_completion_delay, post_completion_delay + 3)
             
-            # Verify post was created by checking if dialog closed
             try:
-                # Check if the dialog is no longer visible
                 wait.until(EC.invisibility_of_element_located((By.CSS_SELECTOR, "[aria-label='Create post'][role='dialog']")))
                 self.logger.info(f"Successfully posted to group: {group_url}")
                 return True
@@ -255,88 +407,31 @@ class GroupPoster:
             self.logger.error(f"Failed to post to group {group_url}: {e}")
             return False
 
-    
-    def _attach_images_to_dialog(self, driver, image_paths):
-        """Attach images via drag & drop directly after Photo/video button (no file dialog)"""
-        try:
-            wait = WebDriverWait(driver, 15)
-            
-            # STEP 1: Find the create post dialog first
-            dialog_container = None
-            dialog_selectors = [
-                "[aria-label='Create post'][role='dialog']",
-                "[role='dialog']"
-            ]
-            
-            for selector in dialog_selectors:
-                try:
-                    dialogs = driver.find_elements(By.CSS_SELECTOR, selector)
-                    for dialog in dialogs:
-                        if dialog.is_displayed():
-                            dialog_container = dialog
-                            self.logger.info("Found create post dialog")
-                            break
-                    if dialog_container:
-                        break
-                except Exception:
-                    continue
-            
-            if not dialog_container:
-                self.logger.error("Could not find create post dialog")
-                return False
-            
-            # STEP 2: Find Photo/video button using working XPath
-            self.logger.info("Looking for Photo/video button using working XPath...")
-            
-            photo_video_button = None
-            try:
-                xpath_selector = "//img[contains(@src, 'Ivw7nhRtXyo.png')]/ancestor::*[@role='button'][1]"
-                elements = dialog_container.find_elements(By.XPATH, xpath_selector)
-                
-                if elements:
-                    for element in elements:
-                        if element.is_displayed():
-                            photo_video_button = element
-                            self.logger.info("Found Photo/video button via working XPath")
-                            break
-                            
-            except Exception as e:
-                self.logger.error(f"XPath photo button search failed: {e}")
-            
-            if not photo_video_button:
-                self.logger.error("Could not find Photo/video button")
-                return False
-            
-            # STEP 3: Click the Photo/video button
-            try:
-                driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", photo_video_button)
-                self.web_manager.random_delay(1, 2)
-                photo_video_button.click()
-                self.logger.info("Clicked Photo/video button")
-            except Exception:
-                driver.execute_script("arguments[0].click();", photo_video_button)
-                self.logger.info("Used JavaScript to click Photo/video button")
-            
-            # STEP 4: Wait for drag & drop area to appear (skip "Add photos/videos" click)
-            self.web_manager.random_delay(3, 5)  # Wait for interface to load
-            self.logger.info("Waiting for drag & drop area to appear...")
-            
-            # STEP 5: Go directly to drag & drop (NO file dialog opening)
-            valid_images = [img for img in image_paths if img and os.path.exists(img)]
-            if not valid_images:
-                self.logger.warning("No valid images found to attach")
-                return False
-            
-            self.logger.info(f"Starting direct drag & drop upload of {len(valid_images)} images")
-            return self._direct_drag_drop_upload(driver, dialog_container, valid_images)
-            
-        except Exception as e:
-            self.logger.error(f"Image attachment failed: {e}")
-            return False
 
-    def _direct_drag_drop_upload(self, driver, dialog_container, image_paths):
+
+
+
+
+
+    
+    
+
+
+
+    def _direct_drag_drop_upload(self, driver, dialog_container, image_paths, settings=None):
         """Direct drag & drop upload after Photo/video button click"""
         try:
+            # ✅ USE SETTINGS FOR DELAYS
+            if settings is None:
+                try:
+                    from ui.settings_dialog import get_current_settings
+                    settings = get_current_settings()
+                except ImportError:
+                    settings = {'image_upload_delay': 5, 'detailed_logging': False}
+            
+            image_delay = settings.get('image_upload_delay', 5)
+            detailed_logging = settings.get('detailed_logging', False)
+            
             self.logger.info("Starting direct drag & drop upload...")
             
             # Find the drag & drop area that appears after clicking Photo/video
@@ -345,8 +440,6 @@ class GroupPoster:
                 # Look for drag & drop area that appears
                 "[aria-label*='drag']",
                 "[aria-label*='drop']", 
-                "div:has-text('drag and drop')",
-                "div:has-text('Add photos')",
                 # Look for upload areas
                 "[data-testid*='upload']",
                 "[data-testid*='photo']",
@@ -357,10 +450,6 @@ class GroupPoster:
             
             for selector in drop_zone_selectors:
                 try:
-                    if ":has-text(" in selector:
-                        # Skip CSS4 selectors
-                        continue
-                        
                     elements = dialog_container.find_elements(By.CSS_SELECTOR, selector)
                     for elem in elements:
                         if elem.is_displayed():
@@ -405,7 +494,9 @@ class GroupPoster:
                             'type': file_type,
                             'content': b64_content
                         })
-                        self.logger.info(f"Prepared file: {os.path.basename(path)} ({file_type}, {len(content)} bytes)")
+                        
+                        if detailed_logging:
+                            self.logger.info(f"Prepared file: {os.path.basename(path)} ({file_type}, {len(content)} bytes)")
                         
                     except Exception as e:
                         self.logger.error(f"Failed to prepare file {path}: {e}")
@@ -525,8 +616,8 @@ class GroupPoster:
                 if result:
                     self.logger.info(f"Direct drag & drop executed for {len(files_data)} files")
                     
-                    # Wait longer for processing
-                    self.web_manager.random_delay(5, 8)
+                    # ✅ USE SETTINGS FOR PROCESSING WAIT
+                    self.web_manager.random_delay(image_delay, image_delay + 3)
                     
                     # Check for image previews or any indication of success
                     preview_count = 0
@@ -548,25 +639,23 @@ class GroupPoster:
                         except Exception:
                             continue
                     
-                    self.logger.info(f"Found {preview_count} image elements after drag & drop")
+                    if detailed_logging:
+                        self.logger.info(f"Found {preview_count} image elements after drag & drop")
                     
                     # Look for upload progress or success indicators
                     success_indicators = [
                         "[aria-label*='upload']",
-                        "[data-testid*='upload']",
-                        "div:contains('Uploading')",
-                        "div:contains('Upload complete')"
+                        "[data-testid*='upload']"
                     ]
                     
                     upload_activity = False
                     for indicator in success_indicators:
                         try:
-                            if ":contains(" in indicator:
-                                continue
                             elements = dialog_container.find_elements(By.CSS_SELECTOR, indicator)
                             if elements:
                                 upload_activity = True
-                                self.logger.info(f"Found upload activity: {indicator}")
+                                if detailed_logging:
+                                    self.logger.info(f"Found upload activity: {indicator}")
                                 break
                         except Exception:
                             continue
@@ -589,6 +678,7 @@ class GroupPoster:
         except Exception as e:
             self.logger.error(f"Direct drag & drop failed: {e}")
             return False
+
 
 
 
