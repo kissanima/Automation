@@ -350,13 +350,20 @@ class FacebookLogin:
         return False
     
     def login(self, username=None, password=None):
-        """Enhanced login with pre-fill detection"""
+        """Enhanced login with pre-fill detection and proper driver management"""
         try:
             # Try to load existing session first
             if self.load_session():
                 return True
             
-            # Initialize driver
+            # IMPORTANT: Clean up failed session driver before creating new one
+            if self.driver:
+                self.logger.info("Cleaning up failed session driver")
+                self.driver.quit()
+                self.driver = None
+            
+            # Now initialize driver for fresh login
+            self.logger.info("Creating new driver for fresh login")
             self.driver = self.web_manager.get_driver(use_existing_profile=True)
             
             # Navigate to Facebook first and check if already logged in
@@ -474,6 +481,7 @@ class FacebookLogin:
         except Exception as e:
             self.logger.error(f"Login failed: {e}")
             return False
+
 
     
     def logout(self):
