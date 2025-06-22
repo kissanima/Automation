@@ -26,7 +26,7 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-*.cpython-310*
+*.pyc
 MANIFEST
 
 # Python bytecode files (all variations)
